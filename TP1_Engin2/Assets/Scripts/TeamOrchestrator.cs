@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TeamOrchestrator : MonoBehaviour
 {
-    private const float MIN_OBJECTS_DISTANCE = 2.0f;
+    private const float MIN_OBJECTS_DISTANCE = 0.1f; // remettre à 2.0f!!!!
     public List<Collectible> KnownCollectibles { get; private set; } = new List<Collectible>();
     public List<Camp> Camps { get; private set; } = new List<Camp>();
     public List<Worker> WorkersList { get; private set; } = new List<Worker>();
@@ -45,6 +45,33 @@ public class TeamOrchestrator : MonoBehaviour
         m_remainingTimeText.text = "Remaining time: " + m_remainingTime.ToString("#.00");
     }
 
+    private void FixedUpdate()
+    {
+        
+        
+        //foreach (var collectible in KnownCollectibles)
+        //{
+        //    float smallestDistance = 0;
+        //    Worker idealWorker;
+        //    
+        //    foreach (var worker in WorkersList)
+        //    {
+        //        float distance = Vector2.Distance(collectible.transform.position, worker.transform.position);
+        //
+        //        if (distance < smallestDistance)
+        //        {
+        //            smallestDistance = distance;
+        //            idealWorker = worker;
+        //        }
+        //    }
+        //
+        //    //Communicate to worker 
+        //}
+
+
+
+    }
+
     public void TryAddCollectible(Collectible collectible)
     {
         if (KnownCollectibles.Contains(collectible))
@@ -54,6 +81,32 @@ public class TeamOrchestrator : MonoBehaviour
 
         KnownCollectibles.Add(collectible);
         Debug.Log("Collectible added");
+
+        FindClosestWorker(collectible);
+    }
+
+    private void FindClosestWorker(Collectible collectible)
+    {
+        Worker idealWorker = WorkersList[0];
+        float smallestDistance = Vector2.Distance(collectible.transform.position, idealWorker.transform.position);
+
+        foreach (var worker in WorkersList)
+        {
+            float distance = Vector2.Distance(collectible.transform.position, worker.transform.position);
+
+            if (distance < smallestDistance)
+            {
+                smallestDistance = distance;
+                idealWorker = worker;
+            }
+        }
+
+        SetWorkerToThisCollectible(idealWorker); //check there is at least one worker
+    }
+
+    private void SetWorkerToThisCollectible(Worker worker)
+    {
+        worker.SetHasBeenAssignedToThisCollectibleBool(true);
     }
 
     public void GainResource(ECollectibleType collectibleType)
