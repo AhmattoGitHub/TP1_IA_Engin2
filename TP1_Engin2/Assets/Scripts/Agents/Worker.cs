@@ -1,3 +1,4 @@
+using MBT;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ public class Worker : MonoBehaviour
     private bool m_isInDepot = false;
     private bool m_isInExtraction = false;
     private float m_currentActionDuration = 0.0f;
+
+    private bool m_HasBeenAssignedToThisCollectible = false;
 
     private void OnValidate()
     {
@@ -101,5 +104,19 @@ public class Worker : MonoBehaviour
         TeamOrchestrator._Instance.GainResource(m_collectibleInInventory);
         m_collectibleInInventory = ECollectibleType.None;
         m_isInDepot = false;
+    }
+
+    public void SetHasBeenAssignedToThisCollectibleBool(bool value)
+    {
+        m_HasBeenAssignedToThisCollectible = value;
+
+        BoolVariable hasBeenAssigned = GetComponentInChildren<MBT.Blackboard>().GetVariable<BoolVariable>("HasBeenAssigned");
+
+        if (hasBeenAssigned == null)
+        {
+            return;
+        }
+
+        hasBeenAssigned.Value = value;
     }
 }

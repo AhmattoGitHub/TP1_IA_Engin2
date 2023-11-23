@@ -22,21 +22,31 @@ GameObject:
   - component: {fileID: 6219630270531039946}
   - component: {fileID: 6993652753897093175}
   - component: {fileID: 8967655967431584880}
-  - component: {fileID: 7216490600588244228}
   - component: {fileID: 1517333750368633276}
   - component: {fileID: 8279729671571050309}
   - component: {fileID: 5556131925086553194}
-  - component: {fileID: 1821311821332842041}
-  - component: {fileID: 3461989884094065034}
   - component: {fileID: 2651675518025669691}
   - component: {fileID: 8416790523607917833}
   - component: {fileID: 5182135658064606887}
-  - component: {fileID: 7617616393695463102}
   - component: {fileID: 2285029508586087716}
   - component: {fileID: 3621209307983211749}
   - component: {fileID: 5538568908436286757}
   - component: {fileID: 5388929549353127754}
   - component: {fileID: 7362571529208058203}
+  - component: {fileID: 763013325499397578}
+  - component: {fileID: 3930423701239444067}
+  - component: {fileID: 5401367383325236481}
+  - component: {fileID: 9035969813220226433}
+  - component: {fileID: 5383360997599947829}
+  - component: {fileID: 3298043190501475827}
+  - component: {fileID: 7764730123469014494}
+  - component: {fileID: 6621489491837110768}
+  - component: {fileID: 7090295325252474293}
+  - component: {fileID: 8488491301735291689}
+  - component: {fileID: 1554837254585636174}
+  - component: {fileID: 1318930006928998473}
+  - component: {fileID: 1238353275491042334}
+  - component: {fileID: 1374939657626055147}
   m_Layer: 0
   m_Name: Brain
   m_TagString: Untagged
@@ -71,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: 9035969813220226433}
   repeatOnFinish: 0
   maxExecutionsPerTick: 60
   parent: {fileID: 0}
@@ -91,6 +101,9 @@ MonoBehaviour:
   - {fileID: 1680646709255059731}
   - {fileID: 1194156866322549448}
   - {fileID: 6219630270531039946}
+  - {fileID: 763013325499397578}
+  - {fileID: 7764730123469014494}
+  - {fileID: 6621489491837110768}
   masterBlackboard: {fileID: 0}
 --- !u!114 &5890265943664346710
 MonoBehaviour:
@@ -123,7 +136,7 @@ MonoBehaviour:
     x: 600
     y: 40
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 0}
   children:
   - {fileID: 4758612399824635840}
@@ -218,7 +231,7 @@ MonoBehaviour:
     x: 800
     y: 240
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 6993652753897093175}
   children:
   - {fileID: 5258321180982019400}
@@ -245,7 +258,7 @@ MonoBehaviour:
     x: 600
     y: 100
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 5944577235920946805}
   children:
   - {fileID: 6993652753897093175}
@@ -272,7 +285,7 @@ MonoBehaviour:
     x: 920
     y: 400
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 5671923688965036911}
   children: []
   behaviourTree: {fileID: 0}
@@ -290,7 +303,7 @@ MonoBehaviour:
     blackboard: {fileID: 520183966280794590}
     key: AgentTransform
     constantValue: {fileID: 0}
-  speed: 0.1
+  speed: 1
   minDistance: 0.01
 --- !u!114 &6219630270531039946
 MonoBehaviour:
@@ -324,7 +337,7 @@ MonoBehaviour:
     x: 600
     y: 160
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 4758612399824635840}
   children:
   - {fileID: 8967655967431584880}
@@ -348,53 +361,22 @@ MonoBehaviour:
   title: Has Found Collectible
   rect:
     serializedVersion: 2
-    x: 440
-    y: 200
+    x: 400
+    y: 220
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 6993652753897093175}
   children:
   - {fileID: 2651675518025669691}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
---- !u!114 &7216490600588244228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3977622099099853166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f38c194eb110bb4bb090c85381f79c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Get nearest camp condition
-  rect:
-    serializedVersion: 2
-    x: 240
-    y: 480
-    width: 160
-    height: 59
-  parent: {fileID: 1821311821332842041}
-  children:
-  - {fileID: 3461989884094065034}
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  m_workerTransform:
+  m_hasBeenAssigned:
     useConstant: 0
     mode: 0
     blackboard: {fileID: 520183966280794590}
-    key: AgentTransform
-    constantValue: {fileID: 0}
-  m_nearestCampVec2:
-    useConstant: 0
-    mode: 0
-    blackboard: {fileID: 520183966280794590}
-    key: TargetPosition2D
-    constantValue: {x: 0, y: 0}
+    key: HasBeenAssigned
+    constantValue: 0
 --- !u!114 &1517333750368633276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,16 +392,16 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: 260
-    y: 320
+    x: -220
+    y: 440
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 2651675518025669691}
   children:
   - {fileID: 7362571529208058203}
   - {fileID: 8279729671571050309}
   - {fileID: 5556131925086553194}
-  - {fileID: 1821311821332842041}
+  - {fileID: 3930423701239444067}
   - {fileID: 8416790523607917833}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -440,10 +422,10 @@ MonoBehaviour:
   title: Move Towards 2D
   rect:
     serializedVersion: 2
-    x: -60
-    y: 400
+    x: -300
+    y: 540
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 1517333750368633276}
   children: []
   behaviourTree: {fileID: 0}
@@ -478,10 +460,10 @@ MonoBehaviour:
   title: Wait
   rect:
     serializedVersion: 2
-    x: 120
-    y: 400
+    x: -120
+    y: 540
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 1517333750368633276}
   children: []
   behaviourTree: {fileID: 0}
@@ -495,71 +477,6 @@ MonoBehaviour:
     constantValue: 1
   randomDeviation: 0
   continueOnRestart: 0
---- !u!114 &1821311821332842041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3977622099099853166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08540605df275034fafc8e05c6704214, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Selector
-  rect:
-    serializedVersion: 2
-    x: 320
-    y: 400
-    width: 160
-    height: 45
-  parent: {fileID: 1517333750368633276}
-  children:
-  - {fileID: 7216490600588244228}
-  - {fileID: 7617616393695463102}
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  random: 0
---- !u!114 &3461989884094065034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3977622099099853166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5153e1372194aba43b420cfc075cd285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Move Towards 2D
-  rect:
-    serializedVersion: 2
-    x: 240
-    y: 562
-    width: 160
-    height: 45
-  parent: {fileID: 7216490600588244228}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  targetPosition:
-    useConstant: 0
-    mode: 0
-    blackboard: {fileID: 520183966280794590}
-    key: TargetPosition2D
-    constantValue: {x: 0, y: 0}
-  transformToMove:
-    useConstant: 0
-    mode: 0
-    blackboard: {fileID: 520183966280794590}
-    key: AgentTransform
-    constantValue: {fileID: 0}
-  speed: 0.1
-  minDistance: 0
 --- !u!114 &2651675518025669691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,10 +492,10 @@ MonoBehaviour:
   title: Repeat Until Fail
   rect:
     serializedVersion: 2
-    x: 260
-    y: 260
+    x: -220
+    y: 380
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 8967655967431584880}
   children:
   - {fileID: 1517333750368633276}
@@ -600,10 +517,10 @@ MonoBehaviour:
   title: Wait
   rect:
     serializedVersion: 2
-    x: 520
-    y: 400
+    x: 260
+    y: 540
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 1517333750368633276}
   children: []
   behaviourTree: {fileID: 0}
@@ -632,43 +549,16 @@ MonoBehaviour:
   title: Can Place Camp
   rect:
     serializedVersion: 2
-    x: 380
-    y: 660
+    x: 760
+    y: 960
     width: 160
-    height: 45
-  parent: {fileID: 7617616393695463102}
+    height: 44
+  parent: {fileID: 0}
   children:
   - {fileID: 2285029508586087716}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
---- !u!114 &7617616393695463102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3977622099099853166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08540605df275034fafc8e05c6704214, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Selector
-  rect:
-    serializedVersion: 2
-    x: 500
-    y: 560
-    width: 160
-    height: 45
-  parent: {fileID: 1821311821332842041}
-  children:
-  - {fileID: 5182135658064606887}
-  - {fileID: 3621209307983211749}
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  random: 0
 --- !u!114 &2285029508586087716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -684,10 +574,10 @@ MonoBehaviour:
   title: Place Camp
   rect:
     serializedVersion: 2
-    x: 380
-    y: 740
+    x: 660
+    y: 1080
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 5182135658064606887}
   children: []
   behaviourTree: {fileID: 0}
@@ -709,11 +599,11 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: 680
-    y: 640
+    x: 960
+    y: 920
     width: 160
-    height: 45
-  parent: {fileID: 7617616393695463102}
+    height: 44
+  parent: {fileID: 0}
   children:
   - {fileID: 5538568908436286757}
   - {fileID: 5388929549353127754}
@@ -736,8 +626,8 @@ MonoBehaviour:
   title: Generate Point Around Self
   rect:
     serializedVersion: 2
-    x: 600
-    y: 720
+    x: 860
+    y: 1060
     width: 160
     height: 59
   parent: {fileID: 3621209307983211749}
@@ -778,10 +668,10 @@ MonoBehaviour:
   title: Move Towards 2D
   rect:
     serializedVersion: 2
-    x: 800
-    y: 720
+    x: 1060
+    y: 1060
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 3621209307983211749}
   children: []
   behaviourTree: {fileID: 0}
@@ -816,10 +706,10 @@ MonoBehaviour:
   title: Get closest collectible
   rect:
     serializedVersion: 2
-    x: -255
-    y: 406
+    x: -480
+    y: 540
     width: 160
-    height: 45
+    height: 44
   parent: {fileID: 1517333750368633276}
   children: []
   behaviourTree: {fileID: 0}
@@ -837,6 +727,390 @@ MonoBehaviour:
     blackboard: {fileID: 520183966280794590}
     key: AgentTransform
     constantValue: {fileID: 0}
+--- !u!114 &763013325499397578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae15c5e6bcb1714080f2e8296c3d17a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: HasBeenAssigned
+  val: 0
+--- !u!114 &3930423701239444067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sequence
+  rect:
+    serializedVersion: 2
+    x: 60
+    y: 540
+    width: 160
+    height: 44
+  parent: {fileID: 1517333750368633276}
+  children:
+  - {fileID: 5401367383325236481}
+  - {fileID: 5383360997599947829}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &5401367383325236481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f38c194eb110bb4bb090c85381f79c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Get nearest camp
+  rect:
+    serializedVersion: 2
+    x: -300
+    y: 660
+    width: 160
+    height: 44
+  parent: {fileID: 3930423701239444067}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  m_workerTransform:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 520183966280794590}
+    key: AgentTransform
+    constantValue: {fileID: 0}
+  m_nearestCampVec2:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 520183966280794590}
+    key: NearestCamp2D
+    constantValue: {x: 0, y: 0}
+--- !u!114 &9035969813220226433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5153e1372194aba43b420cfc075cd285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Move Towards 2D
+  rect:
+    serializedVersion: 2
+    x: -300
+    y: 860
+    width: 160
+    height: 44
+  parent: {fileID: 3298043190501475827}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  targetPosition:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 520183966280794590}
+    key: NearestCamp2D
+    constantValue: {x: 0, y: 0}
+  transformToMove:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 520183966280794590}
+    key: AgentTransform
+    constantValue: {fileID: 0}
+  speed: 0.1
+  minDistance: 0
+--- !u!114 &5383360997599947829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08540605df275034fafc8e05c6704214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Selector
+  rect:
+    serializedVersion: 2
+    x: -80
+    y: 660
+    width: 160
+    height: 44
+  parent: {fileID: 3930423701239444067}
+  children:
+  - {fileID: 3298043190501475827}
+  - {fileID: 8488491301735291689}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &3298043190501475827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee64ee5b671e09141b3df702d6843c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Has nearest camp condition
+  rect:
+    serializedVersion: 2
+    x: -200
+    y: 760
+    width: 160
+    height: 59
+  parent: {fileID: 5383360997599947829}
+  children:
+  - {fileID: 9035969813220226433}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  m_nearestCampVec2:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 520183966280794590}
+    key: NearestCamp2D
+    constantValue: {x: 0, y: 0}
+  m_workerTransform:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 520183966280794590}
+    key: AgentTransform
+    constantValue: {fileID: 0}
+  m_maximumDistance:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 520183966280794590}
+    key: MaximumDistanceFromCamp
+    constantValue: 0
+--- !u!114 &7764730123469014494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4e5f4db414f0ab4c82c187a7653e99d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: MaximumDistanceFromCamp
+  val: 17
+--- !u!114 &6621489491837110768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaa62ce5e63cc9d45ae0efc52561ace7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: NearestCamp2D
+  val: {x: 0, y: 0}
+--- !u!114 &7090295325252474293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08540605df275034fafc8e05c6704214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Selector
+  rect:
+    serializedVersion: 2
+    x: 830
+    y: 866.2
+    width: 160
+    height: 44
+  parent: {fileID: 0}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &8488491301735291689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sequence
+  rect:
+    serializedVersion: 2
+    x: 127
+    y: 758.2
+    width: 160
+    height: 44
+  parent: {fileID: 5383360997599947829}
+  children:
+  - {fileID: 1554837254585636174}
+  - {fileID: 1318930006928998473}
+  - {fileID: 1238353275491042334}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &1554837254585636174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99462d98987c40b49820b0cce6bf9f88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Generate Camp Placement
+  rect:
+    serializedVersion: 2
+    x: -40
+    y: 860
+    width: 160
+    height: 59
+  parent: {fileID: 8488491301735291689}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  m_targetPosition2D:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 520183966280794590}
+    key: TargetPosition2D
+    constantValue: {x: 0, y: 0}
+--- !u!114 &1318930006928998473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5153e1372194aba43b420cfc075cd285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Move Towards 2D
+  rect:
+    serializedVersion: 2
+    x: 140
+    y: 860
+    width: 160
+    height: 44
+  parent: {fileID: 8488491301735291689}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  targetPosition:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 520183966280794590}
+    key: TargetPosition2D
+    constantValue: {x: 0, y: 0}
+  transformToMove:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 520183966280794590}
+    key: AgentTransform
+    constantValue: {fileID: 0}
+  speed: 0.1
+  minDistance: 0
+--- !u!114 &1238353275491042334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f5226fd47a3b54f9758059dac8d2da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Can Place Camp
+  rect:
+    serializedVersion: 2
+    x: 340
+    y: 860
+    width: 160
+    height: 44
+  parent: {fileID: 8488491301735291689}
+  children:
+  - {fileID: 1374939657626055147}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &1374939657626055147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00fe55b43b81f7645952858d1ab3a691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Place Camp
+  rect:
+    serializedVersion: 2
+    x: 298
+    y: 1016
+    width: 160
+    height: 44
+  parent: {fileID: 1238353275491042334}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  m_campPrefab: {fileID: 840567353469284312, guid: 8f9973005e98f9a4793a6abad7277c89, type: 3}
 --- !u!1 &4157857182145598295
 GameObject:
   m_ObjectHideFlags: 0

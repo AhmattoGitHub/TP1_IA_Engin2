@@ -51,6 +51,9 @@ public class MapGenerator : MonoBehaviour
 
 
 		CampCost.RollValue();
+
+		Debug.Log(CampCost.Value);
+		
 		m_mapDimension.RollValue();
 		m_nodesDensity.RollValue();
 		SimulationDuration.RollValue();
