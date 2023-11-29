@@ -14,9 +14,13 @@ public class TeamOrchestrator : MonoBehaviour
     private TextMeshProUGUI m_scoreText;
     [SerializeField]
     private TextMeshProUGUI m_remainingTimeText;
+    [SerializeField]
+    private float m_timeScale = 1.0f;
 
     private float m_remainingTime;
     private int m_score = 0;
+
+
 
     public static TeamOrchestrator _Instance
     {
@@ -37,6 +41,8 @@ public class TeamOrchestrator : MonoBehaviour
     private void Start()
     {
         m_remainingTime = MapGenerator.SimulationDuration.Value;
+
+        Time.timeScale = m_timeScale;
     }
 
     private void Update()

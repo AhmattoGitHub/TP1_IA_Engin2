@@ -459,6 +459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_scoreText: {fileID: 153566360}
   m_remainingTimeText: {fileID: 1264221022}
+  m_timeScale: 10
 --- !u!4 &325813586
 Transform:
   m_ObjectHideFlags: 0

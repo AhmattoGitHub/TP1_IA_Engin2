@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 9035969813220226433}
+  selectedEditorNode: {fileID: 0}
   repeatOnFinish: 0
   maxExecutionsPerTick: 60
   parent: {fileID: 0}
@@ -303,7 +303,7 @@ MonoBehaviour:
     blackboard: {fileID: 520183966280794590}
     key: AgentTransform
     constantValue: {fileID: 0}
-  speed: 1
+  speed: 0.1
   minDistance: 0.01
 --- !u!114 &6219630270531039946
 MonoBehaviour:
