@@ -20,6 +20,12 @@ public class TeamOrchestrator : MonoBehaviour
     private float m_remainingTime;
     private int m_score = 0;
 
+    [field: Header("SEARCH GRID")]
+    [SerializeField]
+    private GameObject m_gridMarker = null;
+    private int m_distanceBetweenPoints = 6;
+    public List<SearchGridCell> GridCells { get; private set; } = new List<SearchGridCell>();    
+
 
 
     public static TeamOrchestrator _Instance
@@ -174,4 +180,53 @@ public class TeamOrchestrator : MonoBehaviour
         //TODO élèves. À vous de trouver quand utiliser cette méthode et l'utiliser.
         m_score -= MapGenerator.WORKER_COST;
     }
+
+    public void GenerateSearchGrid(int mapDimensionValue)
+    {
+        Debug.Log("Map dimension value in Search grid : " + mapDimensionValue);
+
+        float pointsRatio = (mapDimensionValue / m_distanceBetweenPoints) + 1;
+        float gridCenterOffset = (mapDimensionValue / m_distanceBetweenPoints) * m_distanceBetweenPoints / 2f;
+
+        for (int x = 0; x < pointsRatio; x++)
+        {
+            for (int y = 0; y < pointsRatio; y++)
+            {
+                float xPosition = x * m_distanceBetweenPoints - gridCenterOffset;
+                float yPosition = y * m_distanceBetweenPoints - gridCenterOffset;
+
+                Vector2 gridPosition = new Vector2(xPosition, yPosition);
+                SearchGridCell cell = new SearchGridCell(gridPosition);
+
+                GridCells.Add(cell);
+                //Debug.Log("New grid position done");
+            }
+        }
+    }
+
+    public void ShowSearchGrid()
+    {
+        foreach (SearchGridCell cell in GridCells)
+        {
+            Instantiate(m_gridMarker, new Vector3(cell.position.x, cell.position.y, 0.0f), Quaternion.identity);
+        }
+    }
+
+
+
 }
+
+public struct SearchGridCell
+{
+    public Vector2 position;
+    public bool positionSearched;
+
+    public SearchGridCell(Vector2 pos)
+    {
+        position = pos;
+        positionSearched = false;
+    }
+}
+
+
+

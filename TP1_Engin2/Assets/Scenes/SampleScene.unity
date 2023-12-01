@@ -460,6 +460,7 @@ MonoBehaviour:
   m_scoreText: {fileID: 153566360}
   m_remainingTimeText: {fileID: 1264221022}
   m_timeScale: 10
+  m_gridMarker: {fileID: 8597453574975943028, guid: 1e7ae302b0814a54fb684fafb6da8ac4, type: 3}
 --- !u!4 &325813586
 Transform:
   m_ObjectHideFlags: 0
@@ -685,8 +686,8 @@ MonoBehaviour:
   m_collectiblePrefab: {fileID: 4268135139360985153, guid: cdd38b4b4ea8bae4cb541ed230441d8b, type: 3}
   m_useRandomSeed: 1
   m_mapDimension:
-    m_minimumValue: 0
-    m_maximumValue: 100
+    m_minimumValue: 60
+    m_maximumValue: 600
     <Value>k__BackingField: 0
   m_nodesDensity:
     m_minimumValue: 12

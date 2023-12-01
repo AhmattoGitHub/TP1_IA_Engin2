@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
-{
-	private SearchGridGenerator m_searchGridGenerator = null;
+{	
 	[SerializeField]
 	private GameObject m_collectiblePrefab;
 
@@ -29,14 +28,12 @@ public class MapGenerator : MonoBehaviour
 
     private void Awake()
     {
-		m_searchGridGenerator = GetComponentInChildren<SearchGridGenerator>();
-
 		GenerateValues();
 		GenerateMap();
 		ShiftMap();
 
-		m_searchGridGenerator.GenerateSearchGrid(m_mapDimension.Value);
-		m_searchGridGenerator.ShowSearchGrid();
+		TeamOrchestrator._Instance.GenerateSearchGrid(m_mapDimension.Value);
+        TeamOrchestrator._Instance.ShowSearchGrid();
     }
 
     private void Update()
