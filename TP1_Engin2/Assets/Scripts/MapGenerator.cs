@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
+	private SearchGridGenerator m_searchGridGenerator = null;
 	[SerializeField]
 	private GameObject m_collectiblePrefab;
 
@@ -18,7 +19,7 @@ public class MapGenerator : MonoBehaviour
     [field: SerializeField]
 	public static RandomIntBetweenRange CampCost { get; private set; } = new RandomIntBetweenRange(5, 80); //Valeur à laquelle vos workers peuvent accéder
     [SerializeField]
-	private RandomIntBetweenRange m_mapDimension; //Valeur à laquelle vos workers peuvent accéder
+	public RandomIntBetweenRange m_mapDimension; //Valeur à laquelle vos workers peuvent accéder
     [SerializeField]
 	private RandomIntBetweenRange m_nodesDensity;	//Valeur INCONNUE de vos workers
 	public static RandomIntBetweenRange SimulationDuration { get; private set; } = new RandomIntBetweenRange(10, 1000); //In seconds. Between 10 and 1000
@@ -28,9 +29,14 @@ public class MapGenerator : MonoBehaviour
 
     private void Awake()
     {
+		m_searchGridGenerator = GetComponentInChildren<SearchGridGenerator>();
+
 		GenerateValues();
 		GenerateMap();
 		ShiftMap();
+
+		m_searchGridGenerator.GenerateSearchGrid(m_mapDimension.Value);
+		m_searchGridGenerator.ShowSearchGrid();
     }
 
     private void Update()
@@ -55,6 +61,7 @@ public class MapGenerator : MonoBehaviour
 		Debug.Log(CampCost.Value);
 		
 		m_mapDimension.RollValue();
+		Debug.Log("Valeur de m_mapDimension " + m_mapDimension.Value);
 		m_nodesDensity.RollValue();
 		SimulationDuration.RollValue();
     }

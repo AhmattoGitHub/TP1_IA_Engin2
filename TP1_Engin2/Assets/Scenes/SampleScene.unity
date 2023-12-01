@@ -685,8 +685,8 @@ MonoBehaviour:
   m_collectiblePrefab: {fileID: 4268135139360985153, guid: cdd38b4b4ea8bae4cb541ed230441d8b, type: 3}
   m_useRandomSeed: 1
   m_mapDimension:
-    m_minimumValue: 60
-    m_maximumValue: 600
+    m_minimumValue: 0
+    m_maximumValue: 100
     <Value>k__BackingField: 0
   m_nodesDensity:
     m_minimumValue: 12
