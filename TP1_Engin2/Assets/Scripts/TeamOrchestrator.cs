@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -24,9 +25,8 @@ public class TeamOrchestrator : MonoBehaviour
     [SerializeField]
     private GameObject m_gridMarker = null;
     private int m_distanceBetweenPoints = 6;
-    public List<SearchGridCell> SearchGridCells { get; set; } = new List<SearchGridCell>();    
-
-
+    public Dictionary<Vector2Int, SearchGridCell> SearchGridCellsDictionary = new Dictionary<Vector2Int, SearchGridCell>();
+    public int TestingThing { get; set; } = 0;
 
     public static TeamOrchestrator _Instance
     {
@@ -185,47 +185,71 @@ public class TeamOrchestrator : MonoBehaviour
     {
         Debug.Log("Map dimension value in Search grid : " + mapDimensionValue);
 
-        float pointsRatio = (mapDimensionValue / m_distanceBetweenPoints) + 1;
-        float gridCenterOffset = (mapDimensionValue / m_distanceBetweenPoints) * m_distanceBetweenPoints / 2f;
+        //Pour fin de test et réduire la taille du grid
+        mapDimensionValue = 20;
 
-        for (int x = 0; x < pointsRatio; x++)
+        int numberOfPointsOnRowOrColumn = (mapDimensionValue / m_distanceBetweenPoints) + 1;
+        int gridCenterOffset = (mapDimensionValue / m_distanceBetweenPoints) * m_distanceBetweenPoints / 2;
+
+        for (int i = 0; i < numberOfPointsOnRowOrColumn; i++)
         {
-            for (int y = 0; y < pointsRatio; y++)
+            for (int j = 0; j < numberOfPointsOnRowOrColumn; j++)
             {
-                float xPosition = x * m_distanceBetweenPoints - gridCenterOffset;
-                float yPosition = y * m_distanceBetweenPoints - gridCenterOffset;
+                //float xPosition = x * m_distanceBetweenPoints - gridCenterOffset;
+                //float yPosition = y * m_distanceBetweenPoints - gridCenterOffset;
 
-                Vector2 gridPosition = new Vector2(xPosition, yPosition);
-                SearchGridCell cell = new SearchGridCell(gridPosition);
+                int xPosition = i * m_distanceBetweenPoints - gridCenterOffset;
+                int yPosition = j * m_distanceBetweenPoints - gridCenterOffset;
 
-                SearchGridCells.Add(cell);
-                //Debug.Log("New grid position done");
+                Vector2Int gridPosition = new Vector2Int(xPosition, yPosition);
+                //SearchGridCell searchGridCell = new SearchGridCell(gridPosition);
+
+                //SearchGridCellsDictionary.TryAdd(gridPosition, searchGridCell);
             }
         }
     }
 
     public void ShowSearchGrid()
     {
-        foreach (SearchGridCell gridCell in SearchGridCells)
+        foreach (var key in SearchGridCellsDictionary)
         {
-            Instantiate(m_gridMarker, new Vector3(gridCell.gridPosition.x, gridCell.gridPosition.y, 0.0f), Quaternion.identity);
+            Vector2 gridCellPosition = key.Key;
+            Instantiate(m_gridMarker, new Vector3(gridCellPosition.x, gridCellPosition.y, 0.0f), Quaternion.identity);
         }
-    }
+    }    
+
+
 }
 
-public struct SearchGridCell
+
+public class SearchGridCell
 {
-    public Vector2 gridPosition;
-    public bool gridCellAssignedForSearch;
-    public bool positionSearched;    
+    public int X { get; set; }
+    public int Y { get; set; }
+    public bool GridCellAssignedForSearch { get; set; } = false;
+    public bool PositionSearched { get; set; } = false;
 
-    public SearchGridCell(Vector2 position)
+    public SearchGridCell(int x, int y)
     {
-        gridPosition = position;
-        gridCellAssignedForSearch = false;
-        positionSearched = false;
+        X = x;
+        Y = y;
     }
 }
+
+
+//public struct SearchGridCell
+//{
+//    public Vector2 GridPosition { get; set; }
+//    public bool GridCellAssignedForSearch { get; set; }
+//    public bool PositionSearched { get; set; }    
+//
+//    public SearchGridCell(Vector2 position)
+//    {
+//        GridPosition = position;
+//        GridCellAssignedForSearch = false;
+//        PositionSearched = false;
+//    }
+//}
 
 
 
