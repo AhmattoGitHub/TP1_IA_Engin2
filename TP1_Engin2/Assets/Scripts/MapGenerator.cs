@@ -33,7 +33,7 @@ public class MapGenerator : MonoBehaviour
 		ShiftMap();
 
 		TeamOrchestrator._Instance.GenerateSearchGrid(m_mapDimension.Value);
-        TeamOrchestrator._Instance.ShowSearchGrid();
+        TeamOrchestrator._Instance.InstantiateMarkersForSearchGridVisualRepresentation();
     }
 
     private void Update()

@@ -24,9 +24,9 @@ public class TeamOrchestrator : MonoBehaviour
     [field: Header("SEARCH GRID")]
     [SerializeField]
     private GameObject m_gridMarker = null;
-    private int m_distanceBetweenPoints = 6;
+    private int m_distanceBetweenPoints = 6; // Calcul à l'oeil, c'est ce qui permet une couverture complète de la carte en suivant la taille des champs de vision. Needs ref to vision range or something                                             
     public Dictionary<Vector2Int, SearchGridCell> SearchGridCellsDictionary = new Dictionary<Vector2Int, SearchGridCell>();
-    public int TestingThing { get; set; } = 0;
+    
 
     public static TeamOrchestrator _Instance
     {
@@ -195,9 +195,6 @@ public class TeamOrchestrator : MonoBehaviour
         {
             for (int j = 0; j < numberOfPointsOnRowOrColumn; j++)
             {
-                //float xPosition = x * m_distanceBetweenPoints - gridCenterOffset;
-                //float yPosition = y * m_distanceBetweenPoints - gridCenterOffset;
-
                 int xPosition = i * m_distanceBetweenPoints - gridCenterOffset;
                 int yPosition = j * m_distanceBetweenPoints - gridCenterOffset;
 
@@ -209,23 +206,21 @@ public class TeamOrchestrator : MonoBehaviour
         }
     }
 
-    public void ShowSearchGrid()
+    public void InstantiateMarkersForSearchGridVisualRepresentation()
     {
         foreach (var key in SearchGridCellsDictionary)
         {
             Vector2 gridCellPosition = key.Key;
             Instantiate(m_gridMarker, new Vector3(gridCellPosition.x, gridCellPosition.y, 0.0f), Quaternion.identity);
         }
-    }    
-
-
+    }  
 }
 
 
 public class SearchGridCell
 {
-    public int X { get; set; }
-    public int Y { get; set; }
+    public int X { get; private set; }
+    public int Y { get; private set; }
     public bool GridCellAssignedForSearch { get; set; } = false;
     public bool PositionSearched { get; set; } = false;
 

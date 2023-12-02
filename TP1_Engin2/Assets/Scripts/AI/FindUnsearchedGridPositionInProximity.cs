@@ -28,35 +28,15 @@ public class FindUnsearchedGridPositionInProximity : Leaf
 
         dictionaryKey = FindNearestUnassignedSearchGridCell();
 
-        if (m_teamOrchestrator.TestingThing == 3)
-        {
-            Debug.Log("Test");
-        }
-
         if (m_teamOrchestrator.SearchGridCellsDictionary.ContainsKey(dictionaryKey))
-        {
-            //SearchGridCell cellToUpdate = m_teamOrchestrator.SearchGridCellsDictionary[dictionaryKey];
-
+        {            
             m_teamOrchestrator.SearchGridCellsDictionary[dictionaryKey].GridCellAssignedForSearch = true;
-
-            //cellToUpdate.GridCellAssignedForSearch = true;
-        }
-        else 
-        {
-            
-        }
+        }        
 
         m_targetPosition2D.Value = dictionaryKey;
-
-        m_teamOrchestrator.TestingThing++;
-
         
-
-        //throw new System.NotImplementedException();
         return NodeResult.success;
     }
-
-
 
     private Vector2Int FindNearestUnassignedSearchGridCell()
     {        
@@ -68,11 +48,15 @@ public class FindUnsearchedGridPositionInProximity : Leaf
             Vector2Int gridPosition = key.Key;
             SearchGridCell gridCell = key.Value;
             
+            if(gridCell.GridCellAssignedForSearch
+                || gridCell.PositionSearched)
+            {
+                continue;
+            }
+
             float distance = Vector2.Distance(m_currentPosition, gridPosition);
             
-            if (distance < minDistance 
-                && !gridCell.GridCellAssignedForSearch 
-                && !gridCell.PositionSearched)
+            if (distance < minDistance)
             {                
                 minDistance = distance;
                 nearestPosition = gridPosition;                
@@ -81,9 +65,6 @@ public class FindUnsearchedGridPositionInProximity : Leaf
 
         return nearestPosition;
     }
-
-
-
 }
 
 
