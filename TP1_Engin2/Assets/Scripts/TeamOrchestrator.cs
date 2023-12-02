@@ -24,7 +24,7 @@ public class TeamOrchestrator : MonoBehaviour
     private float m_remainingTime;
     private int m_score = 0;
 
-
+    public GameObject m_debugPrefab; //DEBUG
 
     public static TeamOrchestrator _Instance
     {
@@ -97,21 +97,96 @@ public class TeamOrchestrator : MonoBehaviour
         KnownCollectibles.Add(collectible);
         //Debug.Log("Collectible added");
 
-        //FindClosestWorker(collectible);
+        //Instantiate(m_debugPrefab, new Vector3(collectible.GetPosition().x, collectible.GetPosition().y, 0), Quaternion.identity);
     }
 
     public void InitializeExploitationPhase()
     {
         AvailableCollectibles = KnownCollectibles;
         AvailableWorkersList = WorkersList;
-
         Debug.Log("Av. Collectibles" + AvailableCollectibles.Count);
         Debug.Log("Av. Workers" + AvailableWorkersList.Count);
+
+        CalculateStrategyVariables();
 
         AssignAvailableWorkersToAvailableCollectibles();
     }
 
-    public void AssignAvailableWorkersToAvailableCollectibles()
+    private void CalculateStrategyVariables()
+    {
+        int campCost = MapGenerator.CampCost.Value;
+        float workerCost = MapGenerator.WORKER_COST; //20
+        //m_remainingTime
+        int minimumWorkerAmountPerCamp = 0;
+        float eachCampTotalRevenue = 0;
+        float societyTotalRevenue = 0;
+
+        float averageCollectiblesDistance = CalculateAverageCollectiblesDistance(); 
+        Debug.Log("avCollectibDistance: " + averageCollectiblesDistance);
+
+        float averageDepositTime = averageCollectiblesDistance / 5.0f; //approximated WorkerSpeed TO.IMPROVE    // In seconds
+        Debug.Log("avDepositTime: " + averageDepositTime);
+
+        float estimatedTotalDepositsPerWorker = m_remainingTime / averageDepositTime; // Per worker
+        Debug.Log("estimatedTotalDepositsPerWorker: " + estimatedTotalDepositsPerWorker);
+
+
+        minimumWorkerAmountPerCamp = Mathf.CeilToInt((float)campCost / estimatedTotalDepositsPerWorker);
+        Debug.Log("minimumWorkers: " + minimumWorkerAmountPerCamp);
+
+        eachCampTotalRevenue = (1 * minimumWorkerAmountPerCamp * estimatedTotalDepositsPerWorker) - campCost - (minimumWorkerAmountPerCamp * workerCost);
+        Debug.Log("campTotalRevenue: " + eachCampTotalRevenue); //Considering no available workers
+
+        int nbWorkers = 5;
+        while (nbWorkers > 0)
+        {
+            societyTotalRevenue += (1 * minimumWorkerAmountPerCamp * estimatedTotalDepositsPerWorker) - campCost;
+            nbWorkers -= minimumWorkerAmountPerCamp;
+        }
+
+        Debug.Log("using av. workers Income: " + societyTotalRevenue);
+        //societyTotalRevenue += (1 * minimumWorkerAmountPerCamp * estimatedTotalDepositsPerWorker) - campCost - (minimumWorkerAmountPerCamp * workerCost);
+
+    }
+
+    private float CalculateAverageCollectiblesDistance()
+    {
+        float averageDistance = 0;
+        
+        foreach (var collectible in KnownCollectibles)
+        {
+            float smallestDistance = 1000;
+            foreach (var coll in KnownCollectibles)
+            {
+                if (coll == collectible)
+                {
+                    continue;
+                }
+                
+                float dist = Vector2.Distance(collectible.GetPosition(), coll.GetPosition());
+                if (dist < smallestDistance)
+                {
+                    smallestDistance = dist;
+                    //Debug.Log("smaller " + smallestDistance);
+                }
+            }
+
+            if (collectible == KnownCollectibles[0])
+            {
+                averageDistance = smallestDistance;
+            }
+            else
+            {
+                averageDistance = (averageDistance + smallestDistance) / 2;
+                //Debug.Log("average " + averageDistance);
+            }
+
+        }
+
+        return averageDistance;
+    }
+
+    private void AssignAvailableWorkersToAvailableCollectibles()
     {
         //foreach (var collectible in AvailableCollectibles)
         //{
@@ -136,7 +211,6 @@ public class TeamOrchestrator : MonoBehaviour
             SetWorkerToThisCollectible(worker);
 
             AvailableWorkersToRemove.Add(worker);
-            //AvailableWorkersList.Remove(worker);
         }
 
         RemoveItemsFromList();
@@ -153,11 +227,10 @@ public class TeamOrchestrator : MonoBehaviour
                     if (workerToRemove == worker)
                     {
                         AvailableWorkersList.Remove(worker);
-                        Debug.Log(worker.name + " not available anymore");
+                        //Debug.Log(worker.name + " not available anymore");
                         break;
                     }
                 }
-                //Debug.Log("Worker not found in av. list");
             }
             AvailableWorkersToRemove.Clear();
         }
@@ -171,11 +244,10 @@ public class TeamOrchestrator : MonoBehaviour
                     if (collectibleToRemove.GetPosition() == collectible.GetPosition())
                     {
                         AvailableCollectibles.Remove(collectible);
-                        Debug.Log(collectible.name + " not available anymore");
+                        //Debug.Log(collectible.name + " not available anymore");
                         break;
                     }
                 }
-                //Debug.Log("Collectible not found in av. list");
             }
             AvailableCollectiblesToRemove.Clear();
         }
@@ -217,11 +289,10 @@ public class TeamOrchestrator : MonoBehaviour
             }
         }
 
-        Debug.Log(worker.name + " was assigned to " + closestCollectible.GetPosition());
+        //Debug.Log(worker.name + " was assigned to " + closestCollectible.GetPosition());
 
         worker.SetAssignedCollectiblePosition(closestCollectible.GetPosition());
         AvailableCollectiblesToRemove.Add(closestCollectible);
-        //AvailableCollectibles.Remove(closestCollectible);
     }
 
     private void SetWorkerToThisCollectible(Worker worker)
