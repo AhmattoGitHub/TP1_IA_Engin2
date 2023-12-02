@@ -24,7 +24,7 @@ public class TeamOrchestrator : MonoBehaviour
     [SerializeField]
     private GameObject m_gridMarker = null;
     private int m_distanceBetweenPoints = 6;
-    public List<SearchGridCell> GridCells { get; private set; } = new List<SearchGridCell>();    
+    public List<SearchGridCell> SearchGridCells { get; set; } = new List<SearchGridCell>();    
 
 
 
@@ -198,7 +198,7 @@ public class TeamOrchestrator : MonoBehaviour
                 Vector2 gridPosition = new Vector2(xPosition, yPosition);
                 SearchGridCell cell = new SearchGridCell(gridPosition);
 
-                GridCells.Add(cell);
+                SearchGridCells.Add(cell);
                 //Debug.Log("New grid position done");
             }
         }
@@ -206,24 +206,23 @@ public class TeamOrchestrator : MonoBehaviour
 
     public void ShowSearchGrid()
     {
-        foreach (SearchGridCell cell in GridCells)
+        foreach (SearchGridCell gridCell in SearchGridCells)
         {
-            Instantiate(m_gridMarker, new Vector3(cell.position.x, cell.position.y, 0.0f), Quaternion.identity);
+            Instantiate(m_gridMarker, new Vector3(gridCell.gridPosition.x, gridCell.gridPosition.y, 0.0f), Quaternion.identity);
         }
     }
-
-
-
 }
 
 public struct SearchGridCell
 {
-    public Vector2 position;
-    public bool positionSearched;
+    public Vector2 gridPosition;
+    public bool gridCellAssignedForSearch;
+    public bool positionSearched;    
 
-    public SearchGridCell(Vector2 pos)
+    public SearchGridCell(Vector2 position)
     {
-        position = pos;
+        gridPosition = position;
+        gridCellAssignedForSearch = false;
         positionSearched = false;
     }
 }
