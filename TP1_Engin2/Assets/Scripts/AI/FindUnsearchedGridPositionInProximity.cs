@@ -35,11 +35,11 @@ public class FindUnsearchedGridPositionInProximity : Leaf
 
         if (m_teamOrchestrator.SearchGridCellsDictionary.ContainsKey(dictionaryKey))
         {
-            SearchGridCell cellToUpdate = m_teamOrchestrator.SearchGridCellsDictionary[dictionaryKey];
+            //SearchGridCell cellToUpdate = m_teamOrchestrator.SearchGridCellsDictionary[dictionaryKey];
 
-            //m_teamOrchestrator.SearchGridCellsDictionary[dictionaryKey].GridCellAssignedForSearch = true;
+            m_teamOrchestrator.SearchGridCellsDictionary[dictionaryKey].GridCellAssignedForSearch = true;
 
-            cellToUpdate.GridCellAssignedForSearch = true;
+            //cellToUpdate.GridCellAssignedForSearch = true;
         }
         else 
         {

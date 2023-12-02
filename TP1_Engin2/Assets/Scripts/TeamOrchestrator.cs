@@ -186,7 +186,7 @@ public class TeamOrchestrator : MonoBehaviour
         Debug.Log("Map dimension value in Search grid : " + mapDimensionValue);
 
         //Pour fin de test et réduire la taille du grid
-        mapDimensionValue = 20;
+        //mapDimensionValue = 20;
 
         int numberOfPointsOnRowOrColumn = (mapDimensionValue / m_distanceBetweenPoints) + 1;
         int gridCenterOffset = (mapDimensionValue / m_distanceBetweenPoints) * m_distanceBetweenPoints / 2;
@@ -202,9 +202,9 @@ public class TeamOrchestrator : MonoBehaviour
                 int yPosition = j * m_distanceBetweenPoints - gridCenterOffset;
 
                 Vector2Int gridPosition = new Vector2Int(xPosition, yPosition);
-                //SearchGridCell searchGridCell = new SearchGridCell(gridPosition);
+                SearchGridCell searchGridCell = new SearchGridCell(gridPosition.x, gridPosition.y);
 
-                //SearchGridCellsDictionary.TryAdd(gridPosition, searchGridCell);
+                SearchGridCellsDictionary.TryAdd(gridPosition, searchGridCell);
             }
         }
     }
