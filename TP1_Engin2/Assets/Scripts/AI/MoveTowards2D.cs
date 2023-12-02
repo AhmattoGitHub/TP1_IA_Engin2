@@ -7,7 +7,7 @@ public class MoveTowards2D : Leaf
 {
     public Vector2Reference targetPosition;
     public TransformReference transformToMove;
-    public float speed = 1f;
+    public float speed = 0.1f;
     public float minDistance = 0f;
 
     public override NodeResult Execute()

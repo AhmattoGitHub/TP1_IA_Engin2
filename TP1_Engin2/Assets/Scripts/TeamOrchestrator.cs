@@ -7,8 +7,12 @@ public class TeamOrchestrator : MonoBehaviour
 {
     private const float MIN_OBJECTS_DISTANCE = 0.1f; // remettre à 2.0f!!!!
     public List<Collectible> KnownCollectibles { get; private set; } = new List<Collectible>();
+    public List<Collectible> AvailableCollectibles { get; private set; } = new List<Collectible>();
+    public List<Collectible> AvailableCollectiblesToRemove { get; private set; } = new List<Collectible>();
     public List<Camp> Camps { get; private set; } = new List<Camp>();
     public List<Worker> WorkersList { get; private set; } = new List<Worker>();
+    public List<Worker> AvailableWorkersList { get; private set; } = new List<Worker>();
+    public List<Worker> AvailableWorkersToRemove { get; private set; } = new List<Worker>();
 
     [SerializeField]
     private TextMeshProUGUI m_scoreText;
@@ -78,6 +82,11 @@ public class TeamOrchestrator : MonoBehaviour
 
     }
 
+    public float GetRemainingTime()
+    {
+        return m_remainingTime;
+    }
+
     public void TryAddCollectible(Collectible collectible)
     {
         if (KnownCollectibles.Contains(collectible))
@@ -86,33 +95,139 @@ public class TeamOrchestrator : MonoBehaviour
         }
 
         KnownCollectibles.Add(collectible);
-        Debug.Log("Collectible added");
+        //Debug.Log("Collectible added");
 
-        FindClosestWorker(collectible);
+        //FindClosestWorker(collectible);
     }
 
-    private void FindClosestWorker(Collectible collectible)
+    public void InitializeExploitationPhase()
     {
-        Worker idealWorker = WorkersList[0];
-        float smallestDistance = Vector2.Distance(collectible.transform.position, idealWorker.transform.position);
+        AvailableCollectibles = KnownCollectibles;
+        AvailableWorkersList = WorkersList;
 
-        foreach (var worker in WorkersList)
+        Debug.Log("Av. Collectibles" + AvailableCollectibles.Count);
+        Debug.Log("Av. Workers" + AvailableWorkersList.Count);
+
+        AssignAvailableWorkersToAvailableCollectibles();
+    }
+
+    public void AssignAvailableWorkersToAvailableCollectibles()
+    {
+        //foreach (var collectible in AvailableCollectibles)
+        //{
+        //    if (AvailableWorkersList.Count == 0)
+        //    {
+        //        continue;
+        //    }
+        //    
+        //    FindClosestAvailableWorker(collectible);
+        //    AvailableCollectibles.Remove(collectible);
+        //
+        //}
+
+        foreach (var worker in AvailableWorkersList)
         {
-            float distance = Vector2.Distance(collectible.transform.position, worker.transform.position);
+            if (AvailableCollectibles.Count == 0)
+            {
+                break;
+            }
 
+            FindClosestAvailableCollectible(worker);
+            SetWorkerToThisCollectible(worker);
+
+            AvailableWorkersToRemove.Add(worker);
+            //AvailableWorkersList.Remove(worker);
+        }
+
+        RemoveItemsFromList();
+    }
+
+    private void RemoveItemsFromList()
+    {
+        if (AvailableWorkersToRemove.Count != 0)
+        {
+            foreach (var workerToRemove in AvailableWorkersToRemove)
+            {
+                foreach (var worker in AvailableWorkersList)
+                {
+                    if (workerToRemove == worker)
+                    {
+                        AvailableWorkersList.Remove(worker);
+                        Debug.Log(worker.name + " not available anymore");
+                        break;
+                    }
+                }
+                //Debug.Log("Worker not found in av. list");
+            }
+            AvailableWorkersToRemove.Clear();
+        }
+
+        if (AvailableCollectiblesToRemove.Count != 0)
+        {
+            foreach (var collectibleToRemove in AvailableCollectiblesToRemove)
+            {
+                foreach (var collectible in AvailableCollectibles)
+                {
+                    if (collectibleToRemove.GetPosition() == collectible.GetPosition())
+                    {
+                        AvailableCollectibles.Remove(collectible);
+                        Debug.Log(collectible.name + " not available anymore");
+                        break;
+                    }
+                }
+                //Debug.Log("Collectible not found in av. list");
+            }
+            AvailableCollectiblesToRemove.Clear();
+        }
+    }
+
+    //private void FindClosestAvailableWorker(Collectible collectible)
+    //{
+    //    Worker idealWorker = AvailableWorkersList[0];
+    //    float smallestDistance = Vector2.Distance(collectible.transform.position, idealWorker.transform.position);
+    //
+    //    foreach (var worker in AvailableWorkersList)
+    //    {
+    //        float distance = Vector2.Distance(collectible.transform.position, worker.transform.position);
+    //
+    //        if (distance < smallestDistance)
+    //        {
+    //            smallestDistance = distance;
+    //            idealWorker = worker;
+    //        }
+    //    }
+    //
+    //    SetWorkerToThisCollectible(idealWorker);
+    //    AvailableWorkersList.Remove(idealWorker);
+    //}
+
+    private void FindClosestAvailableCollectible(Worker worker)
+    {
+        Collectible closestCollectible = AvailableCollectibles[0];
+        float smallestDistance = Vector2.Distance(worker.transform.position, closestCollectible.transform.position);
+    
+        foreach (var collectible in AvailableCollectibles)
+        {
+            float distance = Vector2.Distance(worker.transform.position, collectible.transform.position);
+    
             if (distance < smallestDistance)
             {
                 smallestDistance = distance;
-                idealWorker = worker;
+                closestCollectible = collectible;
             }
         }
 
-        SetWorkerToThisCollectible(idealWorker); //check there is at least one worker
+        Debug.Log(worker.name + " was assigned to " + closestCollectible.GetPosition());
+
+        worker.SetAssignedCollectiblePosition(closestCollectible.GetPosition());
+        AvailableCollectiblesToRemove.Add(closestCollectible);
+        //AvailableCollectibles.Remove(closestCollectible);
     }
 
     private void SetWorkerToThisCollectible(Worker worker)
     {
-        worker.SetHasBeenAssignedToThisCollectibleBool(true);
+        //worker.SetHasBeenAssignedToThisCollectibleBool(true);
+        worker.SetIsAssignedBool(true);
     }
 
     public void GainResource(ECollectibleType collectibleType)
@@ -126,7 +241,6 @@ public class TeamOrchestrator : MonoBehaviour
             m_score += 10;//TODO: Turn to const
         }
 
-        Debug.Log("New score = " + m_score);
         m_scoreText.text = "Score: " + m_score.ToString();
     }
 

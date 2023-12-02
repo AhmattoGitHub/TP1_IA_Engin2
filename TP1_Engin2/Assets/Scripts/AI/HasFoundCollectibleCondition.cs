@@ -1,5 +1,4 @@
 using MBT;
-using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("")]

@@ -52,7 +52,7 @@ public class MapGenerator : MonoBehaviour
 
 		CampCost.RollValue();
 
-		Debug.Log(CampCost.Value);
+		Debug.Log("Camp cost: " + CampCost.Value);
 		
 		m_mapDimension.RollValue();
 		m_nodesDensity.RollValue();
