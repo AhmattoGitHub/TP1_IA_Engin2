@@ -1,4 +1,3 @@
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -6,6 +5,7 @@ using UnityEngine;
 
 public class TeamOrchestrator : MonoBehaviour
 {
+
     private const float MIN_OBJECTS_DISTANCE = 0.1f; // remettre à 2.0f!!!!
     public List<Collectible> KnownCollectibles { get; private set; } = new List<Collectible>();
     public List<Camp> Camps { get; private set; } = new List<Camp>();
@@ -26,7 +26,11 @@ public class TeamOrchestrator : MonoBehaviour
     private GameObject m_gridMarker = null;
     private int m_distanceBetweenPoints = 6; // Calcul à l'oeil, c'est ce qui permet une couverture complète de la carte en suivant la taille des champs de vision. Needs ref to vision range or something                                             
     public Dictionary<Vector2Int, SearchGridCell> SearchGridCellsDictionary = new Dictionary<Vector2Int, SearchGridCell>();
-    
+    public bool FirstAssigned { get; set; } = false;
+    public bool MovingFirst { get; set; } = false;
+    public uint NumberOfWorkers { get; set; } = 0;
+
+
 
     public static TeamOrchestrator _Instance
     {
@@ -38,10 +42,11 @@ public class TeamOrchestrator : MonoBehaviour
     {
         if (_Instance == null || _Instance == this)
         {
-            _Instance = this;
+            _Instance = this;            
             return;
         }
         Destroy(this);
+        
     }
 
     private void Start()

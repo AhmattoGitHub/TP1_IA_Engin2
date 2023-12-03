@@ -50,6 +50,18 @@ GameObject:
   - component: {fileID: 2832074935077696372}
   - component: {fileID: 4957840281334981226}
   - component: {fileID: 821289773098419743}
+  - component: {fileID: 5832210479959563853}
+  - component: {fileID: 500465613657661524}
+  - component: {fileID: 8704484002389041481}
+  - component: {fileID: 5596420153230922061}
+  - component: {fileID: 7298411214187696484}
+  - component: {fileID: 6549227833237216263}
+  - component: {fileID: 7182875177837740634}
+  - component: {fileID: 7781278409114908531}
+  - component: {fileID: 7517417781721075108}
+  - component: {fileID: 5256218049454545065}
+  - component: {fileID: 5617034979544580884}
+  - component: {fileID: 303509664943347096}
   m_Layer: 0
   m_Name: Brain
   m_TagString: Untagged
@@ -84,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: 5617034979544580884}
   repeatOnFinish: 0
   maxExecutionsPerTick: 60
   parent: {fileID: 0}
@@ -231,8 +243,8 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: 700
-    y: 240
+    x: 612
+    y: 216
     width: 160
     height: 45
   parent: {fileID: 0}
@@ -343,7 +355,6 @@ MonoBehaviour:
     height: 45
   parent: {fileID: 4758612399824635840}
   children:
-  - {fileID: 8967655967431584880}
   - {fileID: 2832074935077696372}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -368,7 +379,7 @@ MonoBehaviour:
     y: 240
     width: 160
     height: 45
-  parent: {fileID: 6993652753897093175}
+  parent: {fileID: 0}
   children:
   - {fileID: 2651675518025669691}
   behaviourTree: {fileID: 0}
@@ -1126,17 +1137,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: Grid Exploration Sequence
+  title: Initial Grid Exploration By Quadrant Sequence
   rect:
     serializedVersion: 2
-    x: 1064
-    y: 250
+    x: 1240
+    y: 240
     width: 160
-    height: 45
+    height: 59
   parent: {fileID: 6993652753897093175}
   children:
-  - {fileID: 4957840281334981226}
-  - {fileID: 821289773098419743}
+  - {fileID: 7182875177837740634}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -1156,11 +1166,11 @@ MonoBehaviour:
   title: Find Unsearched Grid Position In Proximity
   rect:
     serializedVersion: 2
-    x: 980
-    y: 360
+    x: 1320
+    y: 540
     width: 160
     height: 59
-  parent: {fileID: 2832074935077696372}
+  parent: {fileID: 5256218049454545065}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -1192,11 +1202,11 @@ MonoBehaviour:
   title: Move Towards 2D
   rect:
     serializedVersion: 2
-    x: 1186
-    y: 367
+    x: 1520
+    y: 540
     width: 160
     height: 45
-  parent: {fileID: 2832074935077696372}
+  parent: {fileID: 5256218049454545065}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -1215,6 +1225,371 @@ MonoBehaviour:
     constantValue: {fileID: 0}
   speed: 1
   minDistance: 0
+--- !u!114 &5832210479959563853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Grid Exploration Sequence 2
+  rect:
+    serializedVersion: 2
+    x: 1700
+    y: 240
+    width: 160
+    height: 59
+  parent: {fileID: 0}
+  children:
+  - {fileID: 500465613657661524}
+  - {fileID: 8704484002389041481}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &500465613657661524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39721668037b1c645a7fe5fa2376fe30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Find Close By Unassigned Positions And Choose Randomly
+  rect:
+    serializedVersion: 2
+    x: 1600
+    y: 340
+    width: 160
+    height: 73
+  parent: {fileID: 5832210479959563853}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  m_agentTransform:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 520183966280794590}
+    key: AgentTransform
+    constantValue: {fileID: 0}
+  m_targetPosition2D:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 520183966280794590}
+    key: TargetPosition2D
+    constantValue: {x: 0, y: 0}
+--- !u!114 &8704484002389041481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5153e1372194aba43b420cfc075cd285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Move Towards 2D
+  rect:
+    serializedVersion: 2
+    x: 1760
+    y: 360
+    width: 160
+    height: 45
+  parent: {fileID: 5832210479959563853}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  targetPosition:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 520183966280794590}
+    key: TargetPosition2D
+    constantValue: {x: 0, y: 0}
+  transformToMove:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 520183966280794590}
+    key: AgentTransform
+    constantValue: {fileID: 0}
+  speed: 1
+  minDistance: 0
+--- !u!114 &5596420153230922061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58fe7bc6a9b18e148b82820c7c1c0a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Wait
+  rect:
+    serializedVersion: 2
+    x: 1927
+    y: 352
+    width: 160
+    height: 45
+  parent: {fileID: 0}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  time:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 1
+  randomDeviation: 0
+  continueOnRestart: 0
+--- !u!114 &7298411214187696484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db901aaa9a51804f9eaaa557937db75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Choose First Worker To Move Once Condition
+  rect:
+    serializedVersion: 2
+    x: 1020
+    y: 380
+    width: 160
+    height: 59
+  parent: {fileID: 7182875177837740634}
+  children:
+  - {fileID: 6549227833237216263}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &6549227833237216263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sequence
+  rect:
+    serializedVersion: 2
+    x: 1020
+    y: 460
+    width: 160
+    height: 45
+  parent: {fileID: 7298411214187696484}
+  children:
+  - {fileID: 7781278409114908531}
+  - {fileID: 7517417781721075108}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &7182875177837740634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08540605df275034fafc8e05c6704214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Selector
+  rect:
+    serializedVersion: 2
+    x: 1240
+    y: 320
+    width: 160
+    height: 45
+  parent: {fileID: 2832074935077696372}
+  children:
+  - {fileID: 7298411214187696484}
+  - {fileID: 5617034979544580884}
+  - {fileID: 5256218049454545065}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &7781278409114908531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff9035f62e00264198830fccce2a973, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Assign First Worker Move Position
+  rect:
+    serializedVersion: 2
+    x: 940
+    y: 560
+    width: 160
+    height: 59
+  parent: {fileID: 6549227833237216263}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  m_targetPosition2D:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 520183966280794590}
+    key: TargetPosition2D
+    constantValue: {x: 0, y: 0}
+--- !u!114 &7517417781721075108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5153e1372194aba43b420cfc075cd285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Move Towards 2D
+  rect:
+    serializedVersion: 2
+    x: 1120
+    y: 560
+    width: 160
+    height: 45
+  parent: {fileID: 6549227833237216263}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  targetPosition:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 520183966280794590}
+    key: TargetPosition2D
+    constantValue: {x: 0, y: 0}
+  transformToMove:
+    useConstant: 0
+    mode: 0
+    blackboard: {fileID: 520183966280794590}
+    key: AgentTransform
+    constantValue: {fileID: 0}
+  speed: 1
+  minDistance: 0
+--- !u!114 &5256218049454545065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c78c7da6b00e1b46bad07949050f82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Sequence
+  rect:
+    serializedVersion: 2
+    x: 1420
+    y: 380
+    width: 160
+    height: 45
+  parent: {fileID: 7182875177837740634}
+  children:
+  - {fileID: 4957840281334981226}
+  - {fileID: 821289773098419743}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  random: 0
+--- !u!114 &5617034979544580884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70935ffbc23e9a5418d6a5276ab2188b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Make Other Workers Wait Once Condition
+  rect:
+    serializedVersion: 2
+    x: 1240
+    y: 380
+    width: 160
+    height: 59
+  parent: {fileID: 7182875177837740634}
+  children:
+  - {fileID: 303509664943347096}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+--- !u!114 &303509664943347096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3977622099099853166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58fe7bc6a9b18e148b82820c7c1c0a90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Wait
+  rect:
+    serializedVersion: 2
+    x: 1240
+    y: 460
+    width: 160
+    height: 45
+  parent: {fileID: 5617034979544580884}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  time:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 2
+  randomDeviation: 0
+  continueOnRestart: 0
 --- !u!1 &4157857182145598295
 GameObject:
   m_ObjectHideFlags: 0
