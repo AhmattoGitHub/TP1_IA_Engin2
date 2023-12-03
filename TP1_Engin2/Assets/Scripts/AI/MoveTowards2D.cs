@@ -1,5 +1,5 @@
-using MBT;
 using UnityEngine;
+using MBT;
 
 [MBTNode("Engin2/Move Towards 2D")]
 [AddComponentMenu("")]

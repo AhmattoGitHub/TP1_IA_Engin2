@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 public class TeamOrchestrator : MonoBehaviour
 {
-    private const float MIN_OBJECTS_DISTANCE = 0.1f; // remettre ‡ 2.0f!!!!
+    private const float MIN_OBJECTS_DISTANCE = 0.1f; // remettre √† 2.0f!!!!
     public List<Collectible> KnownCollectibles { get; private set; } = new List<Collectible>();
     public List<Collectible> AvailableCollectibles { get; private set; } = new List<Collectible>();
     public List<Collectible> AvailableCollectiblesToRemove { get; private set; } = new List<Collectible>();
@@ -24,7 +25,16 @@ public class TeamOrchestrator : MonoBehaviour
     private float m_remainingTime;
     private int m_score = 0;
 
+
     public GameObject m_debugPrefab; //DEBUG
+
+    [field: Header("SEARCH GRID")]
+    [SerializeField]
+    private GameObject m_gridMarker = null;
+    private int m_distanceBetweenPoints = 6; // Calcul √† l'oeil, c'est ce qui permet une couverture compl√®te de la carte en suivant la taille des champs de vision. Needs ref to vision range or something                                             
+    public Dictionary<Vector2Int, SearchGridCell> SearchGridCellsDictionary = new Dictionary<Vector2Int, SearchGridCell>();
+    
+
 
     public static TeamOrchestrator _Instance
     {
@@ -356,7 +366,74 @@ public class TeamOrchestrator : MonoBehaviour
 
     public void OnWorkerCreated()
     {
-        //TODO ÈlËves. ¿ vous de trouver quand utiliser cette mÈthode et l'utiliser.
+        //TODO √©l√®ves. √Ä vous de trouver quand utiliser cette m√©thode et l'utiliser.
         m_score -= MapGenerator.WORKER_COST;
     }
+
+    public void GenerateSearchGrid(int mapDimensionValue)
+    {
+        Debug.Log("Map dimension value in Search grid : " + mapDimensionValue);
+
+        //Pour fin de test et r√©duire la taille du grid
+        //mapDimensionValue = 20;
+
+        int numberOfPointsOnRowOrColumn = (mapDimensionValue / m_distanceBetweenPoints) + 1;
+        int gridCenterOffset = (mapDimensionValue / m_distanceBetweenPoints) * m_distanceBetweenPoints / 2;
+
+        for (int i = 0; i < numberOfPointsOnRowOrColumn; i++)
+        {
+            for (int j = 0; j < numberOfPointsOnRowOrColumn; j++)
+            {
+                int xPosition = i * m_distanceBetweenPoints - gridCenterOffset;
+                int yPosition = j * m_distanceBetweenPoints - gridCenterOffset;
+
+                Vector2Int gridPosition = new Vector2Int(xPosition, yPosition);
+                SearchGridCell searchGridCell = new SearchGridCell(gridPosition.x, gridPosition.y);
+
+                SearchGridCellsDictionary.TryAdd(gridPosition, searchGridCell);
+            }
+        }
+    }
+
+    public void InstantiateMarkersForSearchGridVisualRepresentation()
+    {
+        foreach (var key in SearchGridCellsDictionary)
+        {
+            Vector2 gridCellPosition = key.Key;
+            Instantiate(m_gridMarker, new Vector3(gridCellPosition.x, gridCellPosition.y, 0.0f), Quaternion.identity);
+        }
+    }  
 }
+
+
+public class SearchGridCell
+{
+    public int X { get; private set; }
+    public int Y { get; private set; }
+    public bool GridCellAssignedForSearch { get; set; } = false;
+    public bool PositionSearched { get; set; } = false;
+
+    public SearchGridCell(int x, int y)
+    {
+        X = x;
+        Y = y;
+    }
+}
+
+
+//public struct SearchGridCell
+//{
+//    public Vector2 GridPosition { get; set; }
+//    public bool GridCellAssignedForSearch { get; set; }
+//    public bool PositionSearched { get; set; }    
+//
+//    public SearchGridCell(Vector2 position)
+//    {
+//        GridPosition = position;
+//        GridCellAssignedForSearch = false;
+//        PositionSearched = false;
+//    }
+//}
+
+
+

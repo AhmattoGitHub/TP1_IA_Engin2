@@ -461,6 +461,8 @@ MonoBehaviour:
   m_remainingTimeText: {fileID: 1264221022}
   m_timeScale: 50
   m_debugPrefab: {fileID: 840567353469284312, guid: 8f9973005e98f9a4793a6abad7277c89, type: 3}
+  m_gridMarker: {fileID: 8597453574975943028, guid: 1e7ae302b0814a54fb684fafb6da8ac4, type: 3}
+
 --- !u!4 &325813586
 Transform:
   m_ObjectHideFlags: 0

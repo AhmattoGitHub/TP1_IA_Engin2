@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
-{
+{	
 	[SerializeField]
 	private GameObject m_collectiblePrefab;
 
@@ -18,7 +18,7 @@ public class MapGenerator : MonoBehaviour
     [field: SerializeField]
 	public static RandomIntBetweenRange CampCost { get; private set; } = new RandomIntBetweenRange(5, 80); //Valeur à laquelle vos workers peuvent accéder
     [SerializeField]
-	private RandomIntBetweenRange m_mapDimension; //Valeur à laquelle vos workers peuvent accéder
+	public RandomIntBetweenRange m_mapDimension; //Valeur à laquelle vos workers peuvent accéder
     [SerializeField]
 	private RandomIntBetweenRange m_nodesDensity;	//Valeur INCONNUE de vos workers
 	public static RandomIntBetweenRange SimulationDuration { get; private set; } = new RandomIntBetweenRange(10, 1000); //In seconds. Between 10 and 1000
@@ -31,6 +31,9 @@ public class MapGenerator : MonoBehaviour
 		GenerateValues();
 		GenerateMap();
 		ShiftMap();
+
+		TeamOrchestrator._Instance.GenerateSearchGrid(m_mapDimension.Value);
+        TeamOrchestrator._Instance.InstantiateMarkersForSearchGridVisualRepresentation();
     }
 
     private void Update()
@@ -55,6 +58,7 @@ public class MapGenerator : MonoBehaviour
 		Debug.Log("Camp cost: " + CampCost.Value);
 		
 		m_mapDimension.RollValue();
+		Debug.Log("Valeur de m_mapDimension " + m_mapDimension.Value);
 		m_nodesDensity.RollValue();
 		SimulationDuration.RollValue();
     }
