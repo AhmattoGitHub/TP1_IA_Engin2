@@ -1,6 +1,7 @@
 using MBT;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Worker : MonoBehaviour
 {
@@ -20,7 +21,8 @@ public class Worker : MonoBehaviour
     private bool m_isInExtraction = false;
     private float m_currentActionDuration = 0.0f;
 
-    private bool m_HasBeenAssignedToThisCollectible = false;
+    private bool m_hasBeenAssignedToThisCollectible = false;
+    private bool m_isAssigned = false;
 
     private void OnValidate()
     {
@@ -108,7 +110,7 @@ public class Worker : MonoBehaviour
 
     public void SetHasBeenAssignedToThisCollectibleBool(bool value)
     {
-        m_HasBeenAssignedToThisCollectible = value;
+        m_hasBeenAssignedToThisCollectible = value;
 
         BoolVariable hasBeenAssigned = GetComponentInChildren<MBT.Blackboard>().GetVariable<BoolVariable>("HasBeenAssigned");
 
@@ -118,5 +120,32 @@ public class Worker : MonoBehaviour
         }
 
         hasBeenAssigned.Value = value;
+    }
+
+    public void SetIsAssignedBool(bool value)
+    {
+        m_isAssigned = value;
+
+        BoolVariable hasBeenAssigned = GetComponentInChildren<MBT.Blackboard>().GetVariable<BoolVariable>("HasBeenAssigned");
+
+        if (hasBeenAssigned == null)
+        {
+            return;
+        }
+
+        hasBeenAssigned.Value = value;
+
+    }
+
+    public void SetAssignedCollectiblePosition(Vector2 position)
+    {
+        Vector2Variable assignedCollectible = GetComponentInChildren<MBT.Blackboard>().GetVariable<Vector2Variable>("AssignedCollectible");
+
+        if (assignedCollectible == null)
+        {
+            return;
+        }
+
+        assignedCollectible.Value = position;
     }
 }

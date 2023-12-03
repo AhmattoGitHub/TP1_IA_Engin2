@@ -6,10 +6,14 @@ using UnityEngine;
 
 public class TeamOrchestrator : MonoBehaviour
 {
-    private const float MIN_OBJECTS_DISTANCE = 0.1f; // remettre à 2.0f!!!!
+    private const float MIN_OBJECTS_DISTANCE = 0.1f; // remettre Ã  2.0f!!!!
     public List<Collectible> KnownCollectibles { get; private set; } = new List<Collectible>();
+    public List<Collectible> AvailableCollectibles { get; private set; } = new List<Collectible>();
+    public List<Collectible> AvailableCollectiblesToRemove { get; private set; } = new List<Collectible>();
     public List<Camp> Camps { get; private set; } = new List<Camp>();
     public List<Worker> WorkersList { get; private set; } = new List<Worker>();
+    public List<Worker> AvailableWorkersList { get; private set; } = new List<Worker>();
+    public List<Worker> AvailableWorkersToRemove { get; private set; } = new List<Worker>();
 
     [SerializeField]
     private TextMeshProUGUI m_scoreText;
@@ -21,12 +25,16 @@ public class TeamOrchestrator : MonoBehaviour
     private float m_remainingTime;
     private int m_score = 0;
 
+
+    public GameObject m_debugPrefab; //DEBUG
+
     [field: Header("SEARCH GRID")]
     [SerializeField]
     private GameObject m_gridMarker = null;
-    private int m_distanceBetweenPoints = 6; // Calcul à l'oeil, c'est ce qui permet une couverture complète de la carte en suivant la taille des champs de vision. Needs ref to vision range or something                                             
+    private int m_distanceBetweenPoints = 6; // Calcul Ã  l'oeil, c'est ce qui permet une couverture complÃ¨te de la carte en suivant la taille des champs de vision. Needs ref to vision range or something                                             
     public Dictionary<Vector2Int, SearchGridCell> SearchGridCellsDictionary = new Dictionary<Vector2Int, SearchGridCell>();
     
+
 
     public static TeamOrchestrator _Instance
     {
@@ -84,6 +92,11 @@ public class TeamOrchestrator : MonoBehaviour
 
     }
 
+    public float GetRemainingTime()
+    {
+        return m_remainingTime;
+    }
+
     public void TryAddCollectible(Collectible collectible)
     {
         if (KnownCollectibles.Contains(collectible))
@@ -92,33 +105,210 @@ public class TeamOrchestrator : MonoBehaviour
         }
 
         KnownCollectibles.Add(collectible);
-        Debug.Log("Collectible added");
+        //Debug.Log("Collectible added");
 
-        FindClosestWorker(collectible);
+        //Instantiate(m_debugPrefab, new Vector3(collectible.GetPosition().x, collectible.GetPosition().y, 0), Quaternion.identity);
     }
 
-    private void FindClosestWorker(Collectible collectible)
+    public void InitializeExploitationPhase()
     {
-        Worker idealWorker = WorkersList[0];
-        float smallestDistance = Vector2.Distance(collectible.transform.position, idealWorker.transform.position);
+        AvailableCollectibles = KnownCollectibles;
+        AvailableWorkersList = WorkersList;
+        Debug.Log("Av. Collectibles" + AvailableCollectibles.Count);
+        Debug.Log("Av. Workers" + AvailableWorkersList.Count);
 
-        foreach (var worker in WorkersList)
+        CalculateStrategyVariables();
+
+        AssignAvailableWorkersToAvailableCollectibles();
+    }
+
+    private void CalculateStrategyVariables()
+    {
+        int campCost = MapGenerator.CampCost.Value;
+        float workerCost = MapGenerator.WORKER_COST; //20
+        //m_remainingTime
+        int minimumWorkerAmountPerCamp = 0;
+        float eachCampTotalRevenue = 0;
+        float societyTotalRevenue = 0;
+
+        float averageCollectiblesDistance = CalculateAverageCollectiblesDistance(); 
+        Debug.Log("avCollectibDistance: " + averageCollectiblesDistance);
+
+        float averageDepositTime = averageCollectiblesDistance / 5.0f; //approximated WorkerSpeed TO.IMPROVE    // In seconds
+        Debug.Log("avDepositTime: " + averageDepositTime);
+
+        float estimatedTotalDepositsPerWorker = m_remainingTime / averageDepositTime; // Per worker
+        Debug.Log("estimatedTotalDepositsPerWorker: " + estimatedTotalDepositsPerWorker);
+
+
+        minimumWorkerAmountPerCamp = Mathf.CeilToInt((float)campCost / estimatedTotalDepositsPerWorker);
+        Debug.Log("minimumWorkers: " + minimumWorkerAmountPerCamp);
+
+        eachCampTotalRevenue = (1 * minimumWorkerAmountPerCamp * estimatedTotalDepositsPerWorker) - campCost - (minimumWorkerAmountPerCamp * workerCost);
+        Debug.Log("campTotalRevenue: " + eachCampTotalRevenue); //Considering no available workers
+
+        int nbWorkers = 5;
+        while (nbWorkers > 0)
         {
-            float distance = Vector2.Distance(collectible.transform.position, worker.transform.position);
+            societyTotalRevenue += (1 * minimumWorkerAmountPerCamp * estimatedTotalDepositsPerWorker) - campCost;
+            nbWorkers -= minimumWorkerAmountPerCamp;
+        }
 
+        Debug.Log("using av. workers Income: " + societyTotalRevenue);
+        //societyTotalRevenue += (1 * minimumWorkerAmountPerCamp * estimatedTotalDepositsPerWorker) - campCost - (minimumWorkerAmountPerCamp * workerCost);
+
+    }
+
+    private float CalculateAverageCollectiblesDistance()
+    {
+        float averageDistance = 0;
+        
+        foreach (var collectible in KnownCollectibles)
+        {
+            float smallestDistance = 1000;
+            foreach (var coll in KnownCollectibles)
+            {
+                if (coll == collectible)
+                {
+                    continue;
+                }
+                
+                float dist = Vector2.Distance(collectible.GetPosition(), coll.GetPosition());
+                if (dist < smallestDistance)
+                {
+                    smallestDistance = dist;
+                    //Debug.Log("smaller " + smallestDistance);
+                }
+            }
+
+            if (collectible == KnownCollectibles[0])
+            {
+                averageDistance = smallestDistance;
+            }
+            else
+            {
+                averageDistance = (averageDistance + smallestDistance) / 2;
+                //Debug.Log("average " + averageDistance);
+            }
+
+        }
+
+        return averageDistance;
+    }
+
+    private void AssignAvailableWorkersToAvailableCollectibles()
+    {
+        //foreach (var collectible in AvailableCollectibles)
+        //{
+        //    if (AvailableWorkersList.Count == 0)
+        //    {
+        //        continue;
+        //    }
+        //    
+        //    FindClosestAvailableWorker(collectible);
+        //    AvailableCollectibles.Remove(collectible);
+        //
+        //}
+
+        foreach (var worker in AvailableWorkersList)
+        {
+            if (AvailableCollectibles.Count == 0)
+            {
+                break;
+            }
+
+            FindClosestAvailableCollectible(worker);
+            SetWorkerToThisCollectible(worker);
+
+            AvailableWorkersToRemove.Add(worker);
+        }
+
+        RemoveItemsFromList();
+    }
+
+    private void RemoveItemsFromList()
+    {
+        if (AvailableWorkersToRemove.Count != 0)
+        {
+            foreach (var workerToRemove in AvailableWorkersToRemove)
+            {
+                foreach (var worker in AvailableWorkersList)
+                {
+                    if (workerToRemove == worker)
+                    {
+                        AvailableWorkersList.Remove(worker);
+                        //Debug.Log(worker.name + " not available anymore");
+                        break;
+                    }
+                }
+            }
+            AvailableWorkersToRemove.Clear();
+        }
+
+        if (AvailableCollectiblesToRemove.Count != 0)
+        {
+            foreach (var collectibleToRemove in AvailableCollectiblesToRemove)
+            {
+                foreach (var collectible in AvailableCollectibles)
+                {
+                    if (collectibleToRemove.GetPosition() == collectible.GetPosition())
+                    {
+                        AvailableCollectibles.Remove(collectible);
+                        //Debug.Log(collectible.name + " not available anymore");
+                        break;
+                    }
+                }
+            }
+            AvailableCollectiblesToRemove.Clear();
+        }
+    }
+
+    //private void FindClosestAvailableWorker(Collectible collectible)
+    //{
+    //    Worker idealWorker = AvailableWorkersList[0];
+    //    float smallestDistance = Vector2.Distance(collectible.transform.position, idealWorker.transform.position);
+    //
+    //    foreach (var worker in AvailableWorkersList)
+    //    {
+    //        float distance = Vector2.Distance(collectible.transform.position, worker.transform.position);
+    //
+    //        if (distance < smallestDistance)
+    //        {
+    //            smallestDistance = distance;
+    //            idealWorker = worker;
+    //        }
+    //    }
+    //
+    //    SetWorkerToThisCollectible(idealWorker);
+    //    AvailableWorkersList.Remove(idealWorker);
+    //}
+
+    private void FindClosestAvailableCollectible(Worker worker)
+    {
+        Collectible closestCollectible = AvailableCollectibles[0];
+        float smallestDistance = Vector2.Distance(worker.transform.position, closestCollectible.transform.position);
+    
+        foreach (var collectible in AvailableCollectibles)
+        {
+            float distance = Vector2.Distance(worker.transform.position, collectible.transform.position);
+    
             if (distance < smallestDistance)
             {
                 smallestDistance = distance;
-                idealWorker = worker;
+                closestCollectible = collectible;
             }
         }
 
-        SetWorkerToThisCollectible(idealWorker); //check there is at least one worker
+        //Debug.Log(worker.name + " was assigned to " + closestCollectible.GetPosition());
+
+        worker.SetAssignedCollectiblePosition(closestCollectible.GetPosition());
+        AvailableCollectiblesToRemove.Add(closestCollectible);
     }
 
     private void SetWorkerToThisCollectible(Worker worker)
     {
-        worker.SetHasBeenAssignedToThisCollectibleBool(true);
+        //worker.SetHasBeenAssignedToThisCollectibleBool(true);
+        worker.SetIsAssignedBool(true);
     }
 
     public void GainResource(ECollectibleType collectibleType)
@@ -132,7 +322,6 @@ public class TeamOrchestrator : MonoBehaviour
             m_score += 10;//TODO: Turn to const
         }
 
-        Debug.Log("New score = " + m_score);
         m_scoreText.text = "Score: " + m_score.ToString();
     }
 
@@ -177,7 +366,7 @@ public class TeamOrchestrator : MonoBehaviour
 
     public void OnWorkerCreated()
     {
-        //TODO élèves. À vous de trouver quand utiliser cette méthode et l'utiliser.
+        //TODO Ã©lÃ¨ves. Ã€ vous de trouver quand utiliser cette mÃ©thode et l'utiliser.
         m_score -= MapGenerator.WORKER_COST;
     }
 
@@ -185,7 +374,7 @@ public class TeamOrchestrator : MonoBehaviour
     {
         Debug.Log("Map dimension value in Search grid : " + mapDimensionValue);
 
-        //Pour fin de test et réduire la taille du grid
+        //Pour fin de test et rÃ©duire la taille du grid
         //mapDimensionValue = 20;
 
         int numberOfPointsOnRowOrColumn = (mapDimensionValue / m_distanceBetweenPoints) + 1;

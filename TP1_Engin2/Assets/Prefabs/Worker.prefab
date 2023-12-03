@@ -47,9 +47,26 @@ GameObject:
   - component: {fileID: 1318930006928998473}
   - component: {fileID: 1238353275491042334}
   - component: {fileID: 1374939657626055147}
+  - component: {fileID: 5380941955232062726}
+  - component: {fileID: 291206562441363180}
+  - component: {fileID: 6913241204481808815}
+  - component: {fileID: 2118777670206283477}
+  - component: {fileID: 8905256149974987582}
+  - component: {fileID: 8868441975612554282}
+  - component: {fileID: 413842846607033275}
+  - component: {fileID: 1461504116242055477}
+  - component: {fileID: 2203056834929455622}
+  - component: {fileID: 6814817873118351246}
+  - component: {fileID: 8257370718921908488}
+  - component: {fileID: 775029277434484768}
+  - component: {fileID: 789490495136630396}
+  - component: {fileID: 2131420122954750574}
+  - component: {fileID: 9082234957125812408}
+  - component: {fileID: 8744611913789561948}
   - component: {fileID: 2832074935077696372}
   - component: {fileID: 4957840281334981226}
   - component: {fileID: 821289773098419743}
+
   m_Layer: 0
   m_Name: Brain
   m_TagString: Untagged
@@ -84,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: 413842846607033275}
   repeatOnFinish: 0
   maxExecutionsPerTick: 60
   parent: {fileID: 0}
@@ -107,6 +124,7 @@ MonoBehaviour:
   - {fileID: 763013325499397578}
   - {fileID: 7764730123469014494}
   - {fileID: 6621489491837110768}
+  - {fileID: 8868441975612554282}
   masterBlackboard: {fileID: 0}
 --- !u!114 &5890265943664346710
 MonoBehaviour:
@@ -136,13 +154,13 @@ MonoBehaviour:
   title: Root
   rect:
     serializedVersion: 2
-    x: 600
-    y: 40
+    x: 1400
+    y: -560
     width: 160
     height: 45
   parent: {fileID: 0}
   children:
-  - {fileID: 4758612399824635840}
+  - {fileID: 413842846607033275}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -1114,7 +1132,10 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   m_campPrefab: {fileID: 840567353469284312, guid: 8f9973005e98f9a4793a6abad7277c89, type: 3}
+  
+--- !u!114 &5380941955232062726
 --- !u!114 &2832074935077696372
+
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1141,7 +1162,9 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   random: 0
+  
 --- !u!114 &4957840281334981226
+
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

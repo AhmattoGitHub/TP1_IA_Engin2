@@ -12,8 +12,6 @@ public class GetNearestCamp : Leaf
 
     public override NodeResult Execute()
     {
-        Debug.Log(this.name);
-        
         if (TeamOrchestrator._Instance.Camps.Count == 0)
         {
             //On n'a pas trouvé de camp. On retourne faux
